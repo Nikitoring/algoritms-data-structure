@@ -1,0 +1,8 @@
+{
+  "name": "algoritms",
+  "version": "1.0.0",
+  "description": "tasks from stepik course: https://stepik.org/course/1547",
+  "main": "index.js",
+  "author": "Nikitoring",
+  "license": "MIT"
+}
