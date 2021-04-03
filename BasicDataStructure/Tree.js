@@ -42,34 +42,38 @@ let firstLine = null;
 rl.on("line", function (line) {
   // Заносим длину элементов
   if (!firstLine) {
-    if (Number(line) >= 1 && Number(line) <= 105) {
+    if (Number(line) >= 1 && Number(line) <= 100000) {
       firstLine = Number(line);
+    } else {
+      return
     }
   } else {
-    let array = line.split(" ").map((i) => Number(i));
-
+    let array = line.split(" ").map((i) => +(i));
     const bfs = (n) => {
-
-      let queue = []
-      let value = 0
       let obj = {}
-      queue.push(n)
       for (let i in array) {
-        obj[array[i]] = array.map((e, index) => e === Number(i) ? index: 'empty').filter(x=> x !== 'empty')
+        if (obj[array[i]] && obj[array[i]].length) {
+          obj[array[i]].push(i)
+        } else {
+          obj[array[i]] = []
+          obj[array[i]].push(i)
+        }
       }
-      console.log('obj', obj);
-      // let filtArr = array.map((i, index) => i === queue[0] ? index: 'empty').filter(x=> x !== 'empty')
-      // while(queue.length > 0) {
-        
-      //   queue.shift()
-      //   value +=1
-      //   // let filtArr = array.indexOf(temp)
-      //   if (filtArr.length) {
-      //     queue.push(...filtArr)
-      //     console.log('queue', queue);
-      //   }
-      // }
-      return console.log(value);
+      let level = 0
+      let root = [...obj[n]]
+      while(root.length) {
+        let queue = [...root]
+        root = []
+        if (queue.length) {
+          for (let e of queue) {
+            if (Array.isArray(obj[e]) && obj[e].length) {
+              root.push(...obj[e])
+            }
+          }
+        }
+        level += 1
+      }
+      return console.log(Number(level));
     }
     bfs(-1);
   }
